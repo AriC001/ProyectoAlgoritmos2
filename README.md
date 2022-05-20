@@ -14,8 +14,6 @@ La **Información sobre los barcos** indica por cada embarcación 4 elementos fu
 3.  Posición en Y
 4.  Dirección en la que se dirige
 
-El proyecto a realizar se constituye de la siguiente manera:
-
 
 ### Indicaciones
 
