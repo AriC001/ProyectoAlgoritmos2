@@ -5,11 +5,11 @@ f = open("data/ships.txt","+r")
 linea1 = f.readline()
 print(linea1)
 lines = f.readlines()
-print(lines)
-name = Array(5,LinkedList())
-posX = Array(5,LinkedList())
-posY = Array(5,LinkedList())
-dir = Array(5,LinkedList())
+#print(lines)
+name = Array(100,LinkedList())
+posX = Array(100,LinkedList())
+posY = Array(100,LinkedList())
+dir = Array(100,LinkedList())
 cont=-1
 line=1
 for line in lines:
@@ -47,7 +47,7 @@ for line in lines:
                     dir[cont] =listDir
                 else:
                     add(dir[cont],line.__getitem__(i))
-for i in range(4):
+for i in range(100):
     printear(name[i])
     printear(posX[i])
     printear(posY[i])
