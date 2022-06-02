@@ -1,14 +1,11 @@
 import objects as obj
 import dictionary as dict
+import algo1 as algo1
+import navigation_system as ns
 
-shipDictionary = dict.Dictionary(64)
-
-for i in range(64):
-    shipDictionary.insert(obj.Ship("barco"+str(i), 0, 0, "N"))
+dictionary = ns.create()
 
 print("==========================")
-for i in range(len(shipDictionary)):
-    print(shipDictionary.data[i])
-
-print(shipDictionary.search(obj.getKey("barco64")))
-print(shipDictionary.search(obj.getKey("barco1")))
+for i in range(len(dictionary)):
+    if dictionary.data[i] != None:
+        print(dictionary.data[i])

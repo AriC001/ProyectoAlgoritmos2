@@ -19,7 +19,7 @@ class Ship:
         self.direction = direction
 
     def __str__(self):
-        return "{"+self.id+", "+str(self.key)+", "+self.position.__str__()+", "+self.direction+"}"
+        return "{"+str(self.id)+", "+str(self.key)+", "+self.position.__str__()+", "+str(self.direction)+"}"
 
 
 def getKey(id):

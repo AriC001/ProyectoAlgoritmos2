@@ -5,7 +5,7 @@ import prime as prime
 class Dictionary:
 
     def __init__(self, size):
-        self.data = algo1.Array(prime.nextPrime(2*size), obj.Ship(None, None, None, None))
+        self.data = algo1.Array(prime.nextPrime(size), obj.Ship(None, None, None, None))
         self.prime = prime.prevPrime(size)
 
     def __len__(self):
