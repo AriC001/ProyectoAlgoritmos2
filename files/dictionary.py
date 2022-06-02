@@ -1,4 +1,3 @@
-from typing_extensions import Self
 import algo1 as algo1
 import objects as obj
 import prime as prime
@@ -16,8 +15,6 @@ class Dictionary:
         inserted = False
         i = 0
         while not inserted:
-            # if self.data[(ship.key+i)%len(self)] == None:
-            #     self.data[(ship.key+i)%len(self)] = ship
             if self.data[self.doublehash(ship.key, i)] == None:
                 self.data[self.doublehash(ship.key, i)] = ship
                 inserted = True
