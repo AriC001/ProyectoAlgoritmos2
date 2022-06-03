@@ -86,7 +86,7 @@ def search(dictionary, id, date):
         return obj.Position(dictionary.data[index].position.x - days, dictionary.data[index].position.y - days)
 
     if algo1.strcmp(dictionary.data[index].direction, algo1.String("S")):
-        return obj.Position(dictionary.data[index].position.x - days, dictionary.data[index].position.y)
+        return obj.Position(dictionary.data[index].position.x, dictionary.data[index].position.y - days)
 
     if algo1.strcmp(dictionary.data[index].direction, algo1.String("SE")):
         return obj.Position(dictionary.data[index].position.x + days, dictionary.data[index].position.y - days)
