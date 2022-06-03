@@ -77,10 +77,13 @@ def substr(t,start,end):
 
 # O(t+1). Donde t es la cantidad de caracteres que matchearon y 1 es para el caso de t=0
 def strcmp(t,p):
-    for i in range(0,len(p)):
-         if t[i] != p[i]:
-            return False
-    return True
+    if len(t) == len(p):
+        for i in range(0,len(p)):
+                if t[i] != p[i]:
+                        return False
+        return True
+    else:
+        return False
 
 def concat(s,c):
        return String(s.arr.data+c.arr.data)

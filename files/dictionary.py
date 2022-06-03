@@ -29,14 +29,16 @@ class Dictionary:
     def doublehash(self, key, i):
         return (self.hash1(key)+i*self.hash2(key))%len(self)
 
-    def search(self, key):
+    def search(self, key, id):
         found = False
         i = 0
         while not found:
 
             if self.data[self.doublehash(key, i)] == None:
-                return None
+                print("",end="")
+                #return None
             
-            if self.data[self.doublehash(key, i)].key == key:
+            elif algo1.strcmp(self.data[self.doublehash(key, i)].id, id):
+                found = True
                 return self.doublehash(key, i)
             i+=1

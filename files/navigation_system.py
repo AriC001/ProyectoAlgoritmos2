@@ -24,26 +24,26 @@ def create():
 
             elif algo1.strcmp(lines[i][j], " ") and attrno == 1:
                 x1 = algo1.substr(lines[i], start, j)
-                x=0.0
+                x=0
                 mult = 1
                 for z in range(len(x1)):
                     if algo1.strcmp(x1[z], "-"):
                         mult=-1
                     else:
-                        x += float(x1[z])*(10**(len(x1) - (z+1)))
+                        x += int(x1[z])*(10**(len(x1) - (z+1)))
                 x = x * mult
                 start = j+1
                 attrno += 1
 
             elif algo1.strcmp(lines[i][j], " ") and attrno == 2:
                 y1 = algo1.substr(lines[i], start, j)
-                y=0.0
+                y=0
                 mult=1
                 for v in range(len(y1)):
                     if algo1.strcmp(y1[v], "-"):
                         mult = -1
                     else:
-                        y += float(y1[v])*(10**(len(y1) - (v+1)))
+                        y += int(y1[v])*(10**(len(y1) - (v+1)))
                 y = y * mult
                 start = j+1
                 attrno += 1
@@ -62,7 +62,7 @@ def search(dictionary, id, date):
 
     days = int(date[0]) * 10 + int(date[1])
 
-    index = dictionary.search(obj.getKey(id))
+    index = dictionary.search(obj.getKey(id),id)
 
     if not index:
         return
@@ -70,23 +70,23 @@ def search(dictionary, id, date):
     if algo1.strcmp(dictionary.data[index].direction, algo1.String("NW")):
         return obj.Position(dictionary.data[index].position.x - days, dictionary.data[index].position.y + days)
 
-    if algo1.strcmp(dictionary.data[index].direction, algo1.String("N")):
+    elif algo1.strcmp(dictionary.data[index].direction, algo1.String("N")):
         return obj.Position(dictionary.data[index].position.x, dictionary.data[index].position.y + days)
     
-    if algo1.strcmp(dictionary.data[index].direction, algo1.String("NE")):
+    elif algo1.strcmp(dictionary.data[index].direction, algo1.String("NE")):
         return obj.Position(dictionary.data[index].position.x + days, dictionary.data[index].position.y + days)
     
-    if algo1.strcmp(dictionary.data[index].direction, algo1.String("W")):
+    elif algo1.strcmp(dictionary.data[index].direction, algo1.String("W")):
         return obj.Position(dictionary.data[index].position.x - days, dictionary.data[index].position.y)
     
-    if algo1.strcmp(dictionary.data[index].direction, algo1.String("E")):
+    elif algo1.strcmp(dictionary.data[index].direction, algo1.String("E")):
         return obj.Position(dictionary.data[index].position.x + days, dictionary.data[index].position.y)
     
-    if algo1.strcmp(dictionary.data[index].direction, algo1.String("SW")):
+    elif algo1.strcmp(dictionary.data[index].direction, algo1.String("SW")):
         return obj.Position(dictionary.data[index].position.x - days, dictionary.data[index].position.y - days)
 
-    if algo1.strcmp(dictionary.data[index].direction, algo1.String("S")):
+    elif algo1.strcmp(dictionary.data[index].direction, algo1.String("S")):
         return obj.Position(dictionary.data[index].position.x, dictionary.data[index].position.y - days)
 
-    if algo1.strcmp(dictionary.data[index].direction, algo1.String("SE")):
+    elif algo1.strcmp(dictionary.data[index].direction, algo1.String("SE")):
         return obj.Position(dictionary.data[index].position.x + days, dictionary.data[index].position.y - days)
