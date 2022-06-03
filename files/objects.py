@@ -1,5 +1,3 @@
-import prime as prime
-
 class Position:
 
     def __init__(self, x, y):
@@ -11,7 +9,7 @@ class Position:
 
 
 class Ship:
-
+    
     def __init__(self, id, x, y, direction):
         self.id = id
         self.key = getKey(id)
@@ -26,10 +24,21 @@ def getKey(id):
 
     if id == None:
         return None
-
+            
     k = 0
     c = 0
     for i in range(len(id)-1,-1,-1):
-        k += ord(id[i])*prime.nextPrime(256)**(c)
-        c+=1
+        k += ord(id[i])*131**(c)
+            
+    return k
+
+def getKey2(id):
+
+    if id == None:
+        return None
+            
+    k=0
+    for i in range(len(id)):
+        k = ord(id[i])*131**i
+
     return k
