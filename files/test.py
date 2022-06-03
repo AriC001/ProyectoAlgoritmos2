@@ -5,6 +5,8 @@ import navigation_system as ns
 
 dictionary = ns.create()
 
-key = dictionary.search(obj.getKey("barco1"))
-if key:
-    dictionary.movement(key,"05/05/2022")
+index = dictionary.search(obj.getKey("barco1"))
+
+if index:
+    print(dictionary.data[index])
+    print(ns.search(dictionary, "barco1", "15/xx"))
