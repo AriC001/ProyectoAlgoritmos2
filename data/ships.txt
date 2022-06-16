@@ -1,4 +1,5 @@
-01/05/2022barco0 -15 80 E
+01/05/2022
+barco0 -15 80 E
 barco1 51 44 W
 barco2 -59 52 SW
 barco3 55 23 SE

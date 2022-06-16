@@ -5,7 +5,7 @@ import prime as prime
 class Dictionary:
 
     def __init__(self, size):
-        self.data = algo1.Array(prime.nextPrime(size*2), obj.Ship(None, 0, 0, None))
+        self.data = algo1.Array(prime.nextPrime(int(1.5*size)), obj.Ship(None, 0, 0, None))
         self.prime = prime.prevPrime(size)
 
     def __len__(self):
@@ -15,6 +15,8 @@ class Dictionary:
         inserted = False
         i = 0
         while not inserted:
+            if i != 0:
+                print(i)
             if self.data[self.doublehash(ship.key, i)] == None:
                 self.data[self.doublehash(ship.key, i)] = ship
                 inserted = True
