@@ -5,7 +5,7 @@ import linkedlist as linkedlist
 
 #Brute force algorithm
 def distance(s1, s2):
-    return ((s1.x-s2.x)**2+(s1.y-s2.y)**2)**(1/2)
+    return ((s1.position.x-s2.position.x)**2+(s1.position.y-s2.position.y)**2)**(1/2)
 
 def bfcpop(P,s,e):
     r = linkedlist.LinkedList()

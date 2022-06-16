@@ -2,6 +2,7 @@ import objects as obj
 import dictionary as dict
 import algo1 as algo1
 import linkedlist as linkedlist
+import closestpairofpoints as cpop
 
 def create():
     
@@ -9,7 +10,7 @@ def create():
     lines = file.readlines()
     lslen = len(lines)
     dictionary = dict.Dictionary(lslen-1)
-    A = algo1.Array(lslen,obj.Ship(None, 0, 0, None))
+    A = algo1.Array(lslen-1,obj.Ship(None, 0, 0, None))
 
     for i in range(1, lslen):
 
@@ -51,12 +52,12 @@ def create():
             elif j == llen-1:
                 direction = algo1.substr(lines[i], start, j)
 
-        A[i] = obj.Ship(id, x, y, direction)
-        dictionary.insert(A[i])
+        A[i-1] = obj.Ship(id, x, y, direction)
+        dictionary.insert(A[i-1])
 
     file.close()
     
-    R = linkedlist.LinkesList()
+    R = linkedlist.LinkedList()
     linkedlist.add(R, A)
     linkedlist.add(R, dictionary)
     
@@ -95,3 +96,6 @@ def search(dictionary, id, date):
 
     elif algo1.strcmp(dictionary.data[index].direction, algo1.String("SE")):
         return obj.Position(dictionary.data[index].position.x + days, dictionary.data[index].position.y - days)
+
+def closer(A):
+    return cpop.dnccpop(A)
