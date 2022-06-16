@@ -1,8 +1,7 @@
-from algo1 import* 
-from linkedlist import*
 import objects as obj
 import dictionary as dict
 import algo1 as algo1
+import linkedlist as linkedlist
 
 def create():
     
@@ -10,6 +9,7 @@ def create():
     lines = file.readlines()
     lslen = len(lines)
     dictionary = dict.Dictionary(lslen-1)
+    A = algo1.Array(lslen,obj.Ship(None, 0, 0, None))
 
     for i in range(1, lslen):
 
@@ -51,11 +51,16 @@ def create():
             elif j == llen-1:
                 direction = algo1.substr(lines[i], start, j)
 
-        dictionary.insert(obj.Ship(id, x, y, direction))
+        A[i] = obj.Ship(id, x, y, direction)
+        dictionary.insert(A[i])
 
     file.close()
     
-    return dictionary
+    R = linkedlist.LinkesList()
+    linkedlist.add(R, A)
+    linkedlist.add(R, dictionary)
+    
+    return R
 
 
 def search(dictionary, id, date):
