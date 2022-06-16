@@ -62,7 +62,7 @@ def search(dictionary, id, date):
 
     days = int(date[0]) * 10 + int(date[1])
 
-    index = dictionary.search(obj.getKey(id),id)
+    index = dictionary.search(id)
 
     if not index:
         return
