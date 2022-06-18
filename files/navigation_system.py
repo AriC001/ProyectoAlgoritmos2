@@ -1,60 +1,72 @@
 import objects as obj
 import dictionary as dict
 import algo1 as algo1
+<<<<<<< HEAD
 import linkedlist as linkedlist
 import closestpairofpoints as cpop
+=======
+import pickle
+>>>>>>> 4eaf7ad1181cf6820a85fb1ca8d9bf3d6ec05298
 
 def create():
-    
-    file = open("data/ships.txt", "r")
-    lines = file.readlines()
-    lslen = len(lines)
-    dictionary = dict.Dictionary(lslen-1)
+    with open("data/ships.txt", "r") as file:
+    #file = open("data/ships.txt", "r")
+        lines = file.readlines()
+        lslen = len(lines)
+        dictionary = dict.Dictionary((lslen-1)*2)
 
-    for i in range(1, lslen):
+        for i in range(1, lslen):
+            #print(i)
+            attrno = 0
+            llen = len(lines[i])
+            for j in range(llen):
 
-        attrno = 0
-        llen = len(lines[i])
-        for j in range(llen):
+                if algo1.strcmp(lines[i][j], " ") and attrno == 0:
+                    id = algo1.substr(lines[i], 0, j)
+                    start = j+1
+                    attrno += 1
 
-            if algo1.strcmp(lines[i][j], " ") and attrno == 0:
-                id = algo1.substr(lines[i], 0, j)
-                start = j+1
-                attrno += 1
+                elif algo1.strcmp(lines[i][j], " ") and attrno == 1:
+                    x1 = algo1.substr(lines[i], start, j)
+                    x=0
+                    mult = 1
+                    for z in range(len(x1)):
+                        if algo1.strcmp(x1[z], "-"):
+                            mult=-1
+                        else:
+                            x += int(x1[z])*(10**(len(x1) - (z+1)))
+                    x = x * mult
+                    start = j+1
+                    attrno += 1
 
-            elif algo1.strcmp(lines[i][j], " ") and attrno == 1:
-                x1 = algo1.substr(lines[i], start, j)
-                x=0
-                mult = 1
-                for z in range(len(x1)):
-                    if algo1.strcmp(x1[z], "-"):
-                        mult=-1
-                    else:
-                        x += int(x1[z])*(10**(len(x1) - (z+1)))
-                x = x * mult
-                start = j+1
-                attrno += 1
+                elif algo1.strcmp(lines[i][j], " ") and attrno == 2:
+                    y1 = algo1.substr(lines[i], start, j)
+                    y=0
+                    mult=1
+                    for v in range(len(y1)):
+                        if algo1.strcmp(y1[v], "-"):
+                            mult = -1
+                        else:
+                            y += int(y1[v])*(10**(len(y1) - (v+1)))
+                    y = y * mult
+                    start = j+1
+                    attrno += 1
 
-            elif algo1.strcmp(lines[i][j], " ") and attrno == 2:
-                y1 = algo1.substr(lines[i], start, j)
-                y=0
-                mult=1
-                for v in range(len(y1)):
-                    if algo1.strcmp(y1[v], "-"):
-                        mult = -1
-                    else:
-                        y += int(y1[v])*(10**(len(y1) - (v+1)))
-                y = y * mult
-                start = j+1
-                attrno += 1
+                elif j == llen-1:
+                    direction = algo1.substr(lines[i], start, j)
 
-            elif j == llen-1:
-                direction = algo1.substr(lines[i], start, j)
+            dictionary.insert(obj.Ship(id, x, y, direction))
+        with open("data/trieShips", "bw") as f:
+            pickle.dump(dictionary,f)
 
-        dictionary.insert(obj.Ship(id, x, y, direction))
 
     file.close()
-    
+    with open("data/trieShips", "br") as f:
+        print("OPEN")
+        dictionary2 = dict.Dictionary((lslen-1)*2)
+        dictionary2 = pickle.load(f)
+        print(search(dictionary2,"barco27", "15/xx"))
+    #dictionary.__str__()
     return dictionary
 
 
@@ -65,7 +77,7 @@ def search(dictionary, id, date):
     index = dictionary.search(id)
 
     if not index:
-        return
+        return None
 
     if algo1.strcmp(dictionary.data[index].direction, algo1.String("NW")):
         return obj.Position(dictionary.data[index].position.x - days, dictionary.data[index].position.y + days)

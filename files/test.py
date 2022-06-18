@@ -3,10 +3,10 @@ import linkedlist as linkedlist
 import dictionary as dict
 import myarray as myarray
 
-D = ns.create()
-print("---------------------------------")
-R = ns.closer(D)
-curr = R.head
-for i in range(3):
-    print(curr.value)
-    curr = curr.nextNode
+dictionary = ns.create()
+
+#index = dictionary.search(obj.getKey("barco27"),"barco27")
+#print(index)
+#if index:
+    #print(dictionary.data[index])
+    #print(ns.search(dictionary, "barco27", "15/xx"))
