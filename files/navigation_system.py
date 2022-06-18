@@ -64,9 +64,9 @@ def create2():
         dictionary2 = pickle.load(f)
     return dictionary2
 
-def search(dictionary, id, date):
+def search(dictionary, date,id):
 
-    days = int(date[0]) * 10 + int(date[1])
+    days = (int(date[0]) * 10 + int(date[1]))-1
 
     index = dictionary.search(id)
 
@@ -97,5 +97,6 @@ def search(dictionary, id, date):
     elif algo1.strcmp(dictionary.data[index].direction, algo1.String("SE")):
         return obj.Position(dictionary.data[index].position.x + days, dictionary.data[index].position.y - days)
 
-def closer(D):
-    return cpop.dnccpop(D)
+def closer(D,date):
+    days = (int(date[0]) * 10 + int(date[1]))-1
+    return cpop.dnccpop(D,days)

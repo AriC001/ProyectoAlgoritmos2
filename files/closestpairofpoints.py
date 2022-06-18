@@ -1,3 +1,4 @@
+import copy
 import myarray as myarray
 import linkedlist as linkedlist
 import algo1 as algo1
@@ -26,10 +27,11 @@ def bfcpop(P,s,e):
     return r
 
 #Divide and conquer algorithm
-def dnccpop(D):
-    P = D.getArray()
-    Y = D.getArray()
+def dnccpop(D,date):
+    P = D.getArray(date)
+    #Y = D.getArray(date)
     myarray.QuickSortX(P,0,len(P)-1)
+    Y = copy.deepcopy(P)
     myarray.QuickSortY(Y,0,len(P)-1)
     return dnccpopr(P,0,len(P),Y)
 

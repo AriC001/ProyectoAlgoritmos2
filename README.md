@@ -32,7 +32,7 @@ Una vez cargados los elementos que componen la flota en la aplicación, permitir
     
 -   Para la generación de consultas se utilizará el siguiente comando:
     1.  `python navigation_system.py -search <date> <nombre_embarcacion>` Devuelve la posición (X, Y) dado una fecha (<date>) y un nombre de embarcación (<nombre_embarcacion>)
-    2.  `python navigation_system.py -closer` Devuelve el nombre de las dos embarcaciones más cercanas entre sí (menor distancia euclidiana).
+    2.  `python navigation_system.py -closer <date>` Devuelve el nombre de las dos embarcaciones más cercanas entre sí (menor distancia euclidiana).
     3.  `python navigation_system.py -collision` Devuelve el día del mes (date) y los barcos que están involucrados en un riesgo de colisión. En caso que no exista ningún riesgo de colisión en el mes se devuelve False
     4.  `python navigation_system.py -collision_ranking <date>` Devuelve un ranking (10) de las embarcaciones más cercanas entre sí.
 

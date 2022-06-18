@@ -1,3 +1,4 @@
+import copy
 import algo1 as algo1
 import objects as obj
 import prime as prime
@@ -50,11 +51,45 @@ class Dictionary:
 
             i+=1
 
-    def getArray(self):
+    def getArray(self,date):
         A = algo1.Array(self.truesize, obj.Ship(None, 0, 0, None))
         j = 0
         for i in range(len(self.data)):
             if self.data[i] != None:
-                A[j] = self.data[i]
+                A[j] = copy.deepcopy(self.data[i])
+                tupla = movement(A,date,j)
+                A[j].position.x = tupla[0] 
+                A[j].position.y = tupla[1] 
+                if j == 88751:
+                    print(A[j].id,end=" ")
+                    print(A[j].direction,end=" ")
+                    print(A[j].position.x,end=" ")
+                    print(A[j].position.y)
                 j += 1
         return A
+
+
+def movement(A,days,index):
+    if algo1.strcmp(A.data[index].direction, algo1.String("NW")):
+        return A.data[index].position.x - days, A.data[index].position.y + days
+
+    elif algo1.strcmp(A.data[index].direction, algo1.String("N")):
+        return A.data[index].position.x, A.data[index].position.y + days
+    
+    elif algo1.strcmp(A.data[index].direction, algo1.String("NE")):
+        return A.data[index].position.x + days, A.data[index].position.y + days
+    
+    elif algo1.strcmp(A.data[index].direction, algo1.String("W")):
+        return A.data[index].position.x - days, A.data[index].position.y
+    
+    elif algo1.strcmp(A.data[index].direction, algo1.String("E")):
+        return A.data[index].position.x + days, A.data[index].position.y
+    
+    elif algo1.strcmp(A.data[index].direction, algo1.String("SW")):
+        return A.data[index].position.x - days, A.data[index].position.y - days
+
+    elif algo1.strcmp(A.data[index].direction, algo1.String("S")):
+        return A.data[index].position.x, A.data[index].position.y - days
+
+    elif algo1.strcmp(A.data[index].direction, algo1.String("SE")):
+        return A.data[index].position.x + days, A.data[index].position.y - days

@@ -8,7 +8,11 @@ import myarray as myarray
 
 dictionary = ns.create2()
 
-list = ns.closer(dictionary)
+#-search <date> <nombre_embarcacion>
+print(ns.search(dictionary,"01-05-2022","barco0"))
+
+#navigation_system.py -closer <date>
+list = ns.closer(dictionary,"01-05-2022")
 curr = list.head
 for i in range(3):
     print(curr.value)
