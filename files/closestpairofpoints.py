@@ -1,5 +1,7 @@
 import myarray as myarray
 import linkedlist as linkedlist
+import algo1 as algo1
+import objects as objects
 
 #Closest pair of points algorithm
 
@@ -24,29 +26,42 @@ def bfcpop(P,s,e):
     return r
 
 #Divide and conquer algorithm
-def dnccpop(P):
-    myarray.QuickSort(P,0,len(P)-1)
-    return dnccpopr(P,0,len(P))
+def dnccpop(D):
+    P = D.getArray()
+    Y = D.getArray()
+    myarray.QuickSortX(P,0,len(P)-1)
+    myarray.QuickSortY(Y,0,len(P)-1)
+    return dnccpopr(P,0,len(P),Y)
 
-def dnccpopr(X,s,e):
+def dnccpopr(X,s,e,Y):
     if e-s <= 3:
         return bfcpop(X,s,e)
 
-    r1 = dnccpopr(X,s,(s+e)//2)
+    Yl = algo1.Array((s+e)//2-s, objects.Ship(None, 0, 0, None))
+    Yr = algo1.Array(e-(s+e)//2, objects.Ship(None, 0, 0, None))
+    j = 0
+    k = 0
+    for i in range(len(Y)):
+        if Y[i].order < (s+e)//2:
+            Yl[j] = Y[i]
+            j += 1
+        else:
+            Yr[k] = Y[i]
+            k += 1
 
-    r2 = dnccpopr(X,(s+e)//2,e)
+    rl = dnccpopr(X,s,(s+e)//2,Yl)
 
-    r = linkedlist.LinkedList()
+    rr = dnccpopr(X,(s+e)//2,e,Yr)
 
-    if linkedlist.access(r1,2) < linkedlist.access(r2,2):
-        curr = r1.head
+    if linkedlist.access(rl,2) < linkedlist.access(rr,2):
+        curr = rl.head
         s1 = curr.value
         curr = curr.nextNode
         s2 = curr.value
         curr = curr.nextNode
         delta = curr.value
     else:
-        curr = r2.head
+        curr = rr.head
         s1 = curr.value
         curr = curr.nextNode
         s2 = curr.value
@@ -54,29 +69,15 @@ def dnccpopr(X,s,e):
         delta = curr.value
         
     band = linkedlist.LinkedList()
-    linkedlist.add(band, X[e//2])
 
-    i = e//2-1
-    while i > -1 and i < len(X):
-        if X[e//2].position.x-delta < X[i].position.x:
-            linkedlist.add(band, X[i])
-            i -= 1
-        else:
-            break
-    i = e//2+1
-    while i > -1 and i < len(X):
-        if X[e//2].position.x+delta > X[i].position.x:
-            linkedlist.add(band, X[i])
-            i += 1
-        else:
-            break
-
-    linkedlist.mergesort(band)
+    for i in range(len(Y)-1, -1, -1):
+        if X[e//2].position.x-delta < Y[i].position.x and X[e//2].position.x+delta > Y[i].position.x:
+            linkedlist.add(band, Y[i])
 
     currentNode = band.head
     while currentNode != None:
         compareNode = currentNode.nextNode
-        for i in range(7):
+        for i in range(6):
 
             if compareNode == None:
                 break
@@ -92,7 +93,6 @@ def dnccpopr(X,s,e):
             compareNode = compareNode.nextNode
 
         currentNode = currentNode.nextNode
-
 
     r = linkedlist.LinkedList()
     linkedlist.add(r,delta)

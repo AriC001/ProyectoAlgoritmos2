@@ -1,12 +1,14 @@
 import algo1 as algo1
 import objects as obj
 import prime as prime
+import myarray as myarray
 
 class Dictionary:
 
     def __init__(self, size):
         self.data = algo1.Array(prime.nextPrime(2*size), obj.Ship(None, 0, 0, None))
-        self.prime = prime.prevPrime(size)
+        self.prime = prime.prevPrime(len(self))
+        self.truesize = size
 
     def __len__(self):
         return len(self.data)
@@ -18,6 +20,9 @@ class Dictionary:
             if self.data[self.doublehash(ship.key, i)] == None:
                 self.data[self.doublehash(ship.key, i)] = ship
                 inserted = True
+            if inserted and i != 0:
+                print(ship)
+                print(str(i)+" collisions")
             i+=1
 
     def hash1(self, key):
@@ -42,3 +47,12 @@ class Dictionary:
                 return self.doublehash(key, i)
 
             i+=1
+
+    def getArray(self):
+        A = algo1.Array(self.truesize, obj.Ship(None, 0, 0, None))
+        j = 0
+        for i in range(len(self.data)):
+            if self.data[i] != None:
+                A[j] = self.data[i]
+                j += 1
+        return A

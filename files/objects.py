@@ -17,6 +17,7 @@ class Ship:
         self.key = getKey(id)
         self.position = Position(x, y)
         self.direction = direction
+        self.order = None
 
     def __str__(self):
         return "{"+str(self.id)+", "+self.position.__str__()+", "+str(self.direction)+"}"
@@ -37,6 +38,6 @@ def getKey(id):
          return None
     k = 0
     for i in range(len(id)):
-        k += getInt(id[i])*63**i
+        k += getInt(id[i])*67**i
 
     return k
