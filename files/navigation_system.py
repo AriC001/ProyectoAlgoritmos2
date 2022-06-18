@@ -1,22 +1,17 @@
 import objects as obj
 import dictionary as dict
 import algo1 as algo1
-<<<<<<< HEAD
 import linkedlist as linkedlist
 import closestpairofpoints as cpop
-=======
 import pickle
->>>>>>> 4eaf7ad1181cf6820a85fb1ca8d9bf3d6ec05298
 
 def create():
     with open("data/ships.txt", "r") as file:
-    #file = open("data/ships.txt", "r")
         lines = file.readlines()
         lslen = len(lines)
-        dictionary = dict.Dictionary((lslen-1)*2)
+        dictionary = dict.Dictionary((lslen-1))
 
         for i in range(1, lslen):
-            #print(i)
             attrno = 0
             llen = len(lines[i])
             for j in range(llen):
@@ -58,17 +53,16 @@ def create():
             dictionary.insert(obj.Ship(id, x, y, direction))
         with open("data/trieShips", "bw") as f:
             pickle.dump(dictionary,f)
-
-
-    file.close()
-    with open("data/trieShips", "br") as f:
-        print("OPEN")
-        dictionary2 = dict.Dictionary((lslen-1)*2)
-        dictionary2 = pickle.load(f)
-        print(search(dictionary2,"barco27", "15/xx"))
-    #dictionary.__str__()
     return dictionary
 
+def create2():
+    with open("data/trieShips", "br") as f:
+        file = open("data/ships.txt", "r")
+        lines = file.readlines()
+        lslen = len(lines)
+        dictionary2 = dict.Dictionary((lslen-1))
+        dictionary2 = pickle.load(f)
+    return dictionary2
 
 def search(dictionary, id, date):
 

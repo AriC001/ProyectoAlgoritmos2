@@ -9,6 +9,7 @@ class Dictionary:
         self.data = algo1.Array(prime.nextPrime(2*size), obj.Ship(None, 0, 0, None))
         self.prime = prime.prevPrime(len(self))
         self.truesize = size
+        #print(size)
 
     def __len__(self):
         return len(self.data)
@@ -21,8 +22,9 @@ class Dictionary:
                 self.data[self.doublehash(ship.key, i)] = ship
                 inserted = True
             if inserted and i != 0:
-                print(ship)
-                print(str(i)+" collisions")
+                print("",end="")
+                #print(ship)
+                #print(str(i)+" collisions")
             i+=1
 
     def hash1(self, key):
