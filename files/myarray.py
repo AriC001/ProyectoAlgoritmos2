@@ -1,3 +1,6 @@
+import algo1 as algo1
+import objects as objects
+
 def QuickSortX(A, p, r):
     if p<r:
         q = partitionX(A,p,r)
@@ -41,3 +44,9 @@ def partitionY(A,p,r):
     A[i+1] = A[r]
     A[r] = aux
     return i+1
+
+def copy(A):
+    B = algo1.Array(len(A), objects.Ship(None, 0, 0, None, None))
+    for i in range(len(A)):
+        B[i] = A[i]
+    return B

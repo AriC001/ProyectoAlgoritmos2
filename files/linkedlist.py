@@ -6,7 +6,7 @@ class LinkedList:
         currentNode = self.head
         string = "["
         while currentNode != None:
-            string += currentNode.value
+            string += currentNode.value.__str__()
             currentNode = currentNode.nextNode
             if currentNode != None:
                 string += ", "
