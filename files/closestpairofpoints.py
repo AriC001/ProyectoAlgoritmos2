@@ -20,10 +20,7 @@ def bfcpop(P,s,e):
                 s1 = P[i]
                 s2 = P[j]
                 delta = distance(P[i], P[j])
-    linkedlist.add(r, delta)
-    linkedlist.add(r, s2)
-    linkedlist.add(r, s1)
-    return r
+    return objects.Distance(s1, s2, delta)
 
 #Divide and conquer algorithm
 def dnccpop(D, date):
@@ -33,18 +30,18 @@ def dnccpop(D, date):
     myarray.QuickSortX(P,0,len(P)-1)
     Y = myarray.copy(P)
     myarray.QuickSortY(Y,0,len(P)-1)
-    return dnccpopr(P,0,len(P),Y)
-
+    return dnccpopr(P,0,len(P)-1,Y)
+ 
 def dnccpopr(X,s,e,Y):
     if e-s <= 3:
         return bfcpop(X,s,e)
 
-    Yl = algo1.Array((s+e)//2-s, objects.Ship(None, 0, 0, None, None))
-    Yr = algo1.Array(e-(s+e)//2, objects.Ship(None, 0, 0, None, None))
+    Yl = algo1.Array((e-s)//2+1, objects.Ship(None, None, None, None, None))
+    Yr = algo1.Array((e-s+1)//2, objects.Ship(None, None, None, None, None))
     j = 0
     k = 0
     for i in range(len(Y)):
-        if Y[i].order < (s+e)//2:
+        if Y[i].xorder <= (s+e)//2:
             Yl[j] = Y[i]
             j += 1
         else:
@@ -53,27 +50,21 @@ def dnccpopr(X,s,e,Y):
 
     rl = dnccpopr(X,s,(s+e)//2,Yl)
 
-    rr = dnccpopr(X,(s+e)//2,e,Yr)
+    rr = dnccpopr(X,(s+e)//2+1,e,Yr)
 
-    if linkedlist.access(rl,2) < linkedlist.access(rr,2):
-        curr = rl.head
-        s1 = curr.value
-        curr = curr.nextNode
-        s2 = curr.value
-        curr = curr.nextNode
-        delta = curr.value
+    if rl.distance < rr.distance:
+        s1 = rl.ship1
+        s2 = rl.ship2
+        delta = rl.distance
     else:
-        curr = rr.head
-        s1 = curr.value
-        curr = curr.nextNode
-        s2 = curr.value
-        curr = curr.nextNode
-        delta = curr.value
+        s1 = rr.ship1
+        s2 = rr.ship2
+        delta = rr.distance
         
     band = linkedlist.LinkedList()
 
     for i in range(len(Y)-1, -1, -1):
-        if X[e//2].position.x-delta < Y[i].position.x and X[e//2].position.x+delta > Y[i].position.x:
+        if X[(s+e)//2].position.x-delta <= Y[i].position.x and X[(s+e)//2].position.x+delta >= Y[i].position.x:
             linkedlist.add(band, Y[i])
 
     currentNode = band.head
@@ -96,8 +87,5 @@ def dnccpopr(X,s,e,Y):
 
         currentNode = currentNode.nextNode
 
-    r = linkedlist.LinkedList()
-    linkedlist.add(r,delta)
-    linkedlist.add(r,s2)
-    linkedlist.add(r,s1)
+    r = objects.Distance(s1, s2, delta)
     return r

@@ -2,14 +2,13 @@ import navigation_system as ns
 import linkedlist as linkedlist
 import dictionary as dict
 import myarray as myarray
+import objects as objects
+import algo1 as algo1
 
 
-D = ns.create()
-R1 = ns.closer(D, "01/xx/xxxx")
-R2 = ns.closer(D, "02/xx/xxxx")
-print(R1)
-print(R2)
-
+# D = ns.create()
+# D = ns.create2()
+# print(ns.closer(D,"04/xx/xxxx"))
 
 # dictionary = ns.create2()
 

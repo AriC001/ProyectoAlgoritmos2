@@ -9,9 +9,9 @@ def filltxt(name, n):
             file.write(name
         +str(i)
         +" "
-        +str(random.randint(-n, n))
+        +str(random.randint(-n+1, n-1)+random.random())
         +" "
-        +str(random.randint(-n, n))
+        +str(random.randint(-n+1, n-1)+random.random())
         +" "
         +dir[random.randint(0,7)]
         +"\n")

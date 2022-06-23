@@ -50,7 +50,12 @@ class Array:
                 else:
                         self.data[index]=value
         def __str__(self):
-                return str([self.data[i] for i in range(0,len(self.data))])
+                s = ""
+                for i in range(len(self.data)):
+                        s += str(self.data[i].__str__())
+                        if i < len(self.data)-1:
+                                s += "\n"
+                return s
 
         def __len__(self):
                 return(self.size)

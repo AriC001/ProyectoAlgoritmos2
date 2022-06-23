@@ -15,14 +15,14 @@ def partitionX(A,p,r):
             i += 1
             aux = A[i]
             A[i] = A[j]
-            A[i].order = i
+            A[i].xorder = i
             A[j] = aux
-            A[j].order = j
+            A[j].xorder = j
     aux = A[i+1]
     A[i+1] = A[r]
-    A[i+1].order = i+1
+    A[i+1].xorder = i+1
     A[r] = aux
-    A[r].order = r
+    A[r].xorder = r
     return i+1
 
 def QuickSortY(A, p, r):
@@ -46,7 +46,7 @@ def partitionY(A,p,r):
     return i+1
 
 def copy(A):
-    B = algo1.Array(len(A), objects.Ship(None, 0, 0, None, None))
+    B = algo1.Array(len(A), objects.Ship(None, None, None, None, None))
     for i in range(len(A)):
         B[i] = A[i]
     return B
