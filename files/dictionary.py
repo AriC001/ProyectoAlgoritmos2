@@ -1,4 +1,3 @@
-from types import NoneType
 import algo1 as algo1
 import objects as obj
 import prime as prime
@@ -21,7 +20,11 @@ class Dictionary:
             if self.data[self.doublehash(ship.key, i)] == None:
                 self.data[self.doublehash(ship.key, i)] = ship
                 inserted = True
-            i+=1
+            if inserted and i>0:
+                print(i)
+            else:
+                i+=1
+            
 
     def hash1(self, key):
         return key%len(self)
@@ -52,9 +55,8 @@ class Dictionary:
         j = 0
         for i in range(len(self.data)):
             if self.data[i] != None:
-                if self.data[i].id != None:
-                    A[j] = obj.Ship(self.data[i].id, self.data[i].position.x, self.data[i].position.y, self.data[i].position.date, self.data[i].direction)
-                    j += 1
+                A[j] = obj.Ship(self.data[i].id, self.data[i].position.x, self.data[i].position.y, self.data[i].position.date, self.data[i].direction)
+                j += 1
         return A
 
     def insert2(self, ship):

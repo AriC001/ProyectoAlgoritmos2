@@ -9,10 +9,10 @@ import copy
 def create():
     with open("data/ships.txt", "r") as file:
         lines = file.readlines()
-        lslen = len(lines)
-        dictionary = dict.Dictionary((lslen-1))
+        ships = getShipCount(lines)
+        dictionary = dict.Dictionary((ships))
         date = lines[0]
-        for i in range(1, lslen):
+        for i in range(1, ships+1):
             attrno = 0
             llen = len(lines[i])
             for j in range(llen):
@@ -39,6 +39,14 @@ def create():
         with open("data/trieShips", "bw") as f:
             pickle.dump(dictionary,f)
     return dictionary
+
+def getShipCount(lines):
+    c = 0
+    for i in range(1, len(lines)):
+        if len(lines[i]) > 1:
+            c += 1
+    return c
+
 
 def toFloat(s):
     ip = 0
@@ -75,31 +83,11 @@ def search(dictionary, date, id):
     if not index:
         return None
 
-    days = obj.getDays(date)-obj.getDays(dictionary.data[index].position.date)
+    s = obj.Ship(dictionary.data[index].id, dictionary.data[index].position.x, dictionary.data[index].position.y, dictionary.data[index].position.date, dictionary.data[index].direction)
 
-    if algo1.strcmp(dictionary.data[index].direction, algo1.String("NW")):
-        return obj.Position(dictionary.data[index].position.x - days, dictionary.data[index].position.y + days, date)
+    s.movement(date)
 
-    elif algo1.strcmp(dictionary.data[index].direction, algo1.String("N")):
-        return obj.Position(dictionary.data[index].position.x, dictionary.data[index].position.y + days, date)
-    
-    elif algo1.strcmp(dictionary.data[index].direction, algo1.String("NE")):
-        return obj.Position(dictionary.data[index].position.x + days, dictionary.data[index].position.y + days, date)
-    
-    elif algo1.strcmp(dictionary.data[index].direction, algo1.String("W")):
-        return obj.Position(dictionary.data[index].position.x - days, dictionary.data[index].position.y, date)
-    
-    elif algo1.strcmp(dictionary.data[index].direction, algo1.String("E")):
-        return obj.Position(dictionary.data[index].position.x + days, dictionary.data[index].position.y, date)
-    
-    elif algo1.strcmp(dictionary.data[index].direction, algo1.String("SW")):
-        return obj.Position(dictionary.data[index].position.x - days, dictionary.data[index].position.y - days, date)
-
-    elif algo1.strcmp(dictionary.data[index].direction, algo1.String("S")):
-        return obj.Position(dictionary.data[index].position.x, dictionary.data[index].position.y - days, date)
-
-    elif algo1.strcmp(dictionary.data[index].direction, algo1.String("SE")):
-        return obj.Position(dictionary.data[index].position.x + days, dictionary.data[index].position.y - days, date)
+    return s.position
 
 
 def closer(D, date):

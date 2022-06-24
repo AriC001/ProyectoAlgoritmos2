@@ -25,19 +25,19 @@ class Ship:
         return "{"+str(self.id)+", "+self.position.__str__()+", "+str(self.direction)+"}"
 
     def movement(self, date):
-        days = days = getDays(date)-getDays(self.position.date)
+        days = getDays(date)-getDays(self.position.date)
         self.position.date = date
 
         if algo1.strcmp(self.direction, algo1.String("NW")):
-            self.position.x -= days
-            self.position.y += days
+            self.position.x -= days/2**(1/2)
+            self.position.y += days/2**(1/2)
         
         elif algo1.strcmp(self.direction, algo1.String("N")):
             self.position.y += days
 
         elif algo1.strcmp(self.direction, algo1.String("NE")):
-            self.position.x += days
-            self.position.y += days
+            self.position.x += days/2**(1/2)
+            self.position.y += days/2**(1/2)
 
         elif algo1.strcmp(self.direction, algo1.String("W")):
             self.position.x -= days
@@ -46,15 +46,15 @@ class Ship:
             self.position.x += days
 
         elif algo1.strcmp(self.direction, algo1.String("SW")):
-            self.position.x -= days
-            self.position.y -= days
+            self.position.x -= days/2**(1/2)
+            self.position.y -= days/2**(1/2)
 
         elif algo1.strcmp(self.direction, algo1.String("S")):
             self.position.y -= days
 
         elif algo1.strcmp(self.direction, algo1.String("SE")):
-            self.position.x += days
-            self.position.y -= days
+            self.position.x += days/2**(1/2)
+            self.position.y -= days/2**(1/2)
 
 def getInt(character):
     unicode = ord(character)

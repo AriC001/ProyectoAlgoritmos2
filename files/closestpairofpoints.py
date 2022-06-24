@@ -24,16 +24,14 @@ def bfcpop(P,s,e):
     return objects.Distance(s1, s2, delta)
 
 #Divide and conquer algorithm
-def dnccpop(D, date,delete):
+def dnccpop(D, date, delete):
     P = D.getArray()
-    len = trueLen(P)
-    for i in range(len):
-        if P[i] != None:
-            P[i].movement(date)
-    myarray.QuickSortX(P,0,len-1)
+    for i in range(len(P)):
+        P[i].movement(date)
+    myarray.QuickSortX(P,0,len(P)-1)
     Y = myarray.copy(P)
-    myarray.QuickSortY(Y,0,len-1)
-    return deleteFromD(D,dnccpopr(P,0,len-1,Y),delete)
+    myarray.QuickSortY(Y,0,len(P)-1)
+    return deleteFromD(D,dnccpopr(P,0,len(P)-1,Y),delete)
  
 def dnccpopr(X,s,e,Y):
     if e-s <= 3:
