@@ -92,7 +92,7 @@ def search(dictionary, date, id):
 
 def closer(D, date):
     r = algo1.Array(2, algo1.String(""))
-    cp = cpop.dnccpop(D, date,2)
+    cp = cpop.dnccpop(D, date)
     r[0] = cp[1].ship1.id
     r[1] = cp[1].ship2.id
     return r
@@ -105,14 +105,14 @@ def collision(Dictionary):
             date = "0" + str(days+1)
         else:
             date = str(days+1)
-        r = cpop.dnccpop(D, date,0)
+        r = cpop.dnccpopForCollision(D, date,0)
         mounth[days] = r[1]
         if mounth[days].distance <= 1:
             print("Day",days+1,": ",mounth[days].ship1.id,mounth[days].ship2.id,mounth[days].distance)
         second = linkedlist.LinkedList()#obj.Distance(None,None,None))
         while mounth[days].distance <= 1:
             #deberia eliminar uno y despues el otro simplemente pasando un numero, ver si es par eliminar uno si es impar eliminar el otro
-            r = cpop.dnccpop(D, date,0)
+            r = cpop.dnccpopForCollision(D, date,0)
             '''
             D = copy.deepcopy(Dictionary)
             aux = cpop.deleteFromD(D,mounth[days],0)
@@ -126,6 +126,6 @@ def collision(Dictionary):
         for j in range(linkedlist.length(second)):
             aux = aux = cpop.deleteFromD(D,second[j].value,1)
             D = copy.deepcopy(aux[0])
-            r = cpop.dnccpop(D, date,0)
+            r = cpop.dnccpopForCollision(D, date,0)
             if r[1].distance <= 1:
                 print("Day",days+1,": ",r[1].ship1.id,r[1].ship2.id,r[1].distance)
