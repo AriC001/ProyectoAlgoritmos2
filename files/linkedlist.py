@@ -65,3 +65,18 @@ def access(L, position):
         currentNode = currentNode.nextNode
 
     return currentNode.value
+
+def addInverted(L,element):
+    
+    if L == None:
+        newNode = Node()
+        newNode.value = element
+        L.head = newNode
+    else:
+        newNode = Node()
+        current = Node()
+        current = L.head
+        newNode.value = element
+        while current != None:
+            current=current.nextNode
+        current = newNode

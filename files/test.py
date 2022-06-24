@@ -6,19 +6,19 @@ import objects as objects
 import algo1 as algo1
 
 
-# D = ns.create()
-# D = ns.create2()
+#D = ns.create()
+D = ns.create2()
 # print(ns.closer(D,"04/xx/xxxx"))
 
 # dictionary = ns.create2()
 
 # #-search <date> <nombre_embarcacion>
-# print(ns.search(dictionary,"01-05-2022","barco0"))
+print(ns.search(D,"01-05-2022","barco0"))
 
 # #navigation_system.py -closer <date>
-# list = ns.closer(dictionary,"01-05-2022")
-# curr = list.head
-# for i in range(3):
-#     print(curr.value)
-#     curr = curr.nextNode
+list = ns.closer(D,"01-05-2022")
+print(list)
+
+
+ns.collision(D)
 

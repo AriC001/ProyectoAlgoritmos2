@@ -2,6 +2,7 @@ import myarray as myarray
 import linkedlist as linkedlist
 import algo1 as algo1
 import objects as objects
+import copy
 
 #Closest pair of points algorithm
 
@@ -23,14 +24,16 @@ def bfcpop(P,s,e):
     return objects.Distance(s1, s2, delta)
 
 #Divide and conquer algorithm
-def dnccpop(D, date):
+def dnccpop(D, date,delete):
     P = D.getArray()
-    for i in range(len(P)):
-        P[i].movement(date)
-    myarray.QuickSortX(P,0,len(P)-1)
+    len = trueLen(P)
+    for i in range(len):
+        if P[i] != None:
+            P[i].movement(date)
+    myarray.QuickSortX(P,0,len-1)
     Y = myarray.copy(P)
-    myarray.QuickSortY(Y,0,len(P)-1)
-    return dnccpopr(P,0,len(P)-1,Y)
+    myarray.QuickSortY(Y,0,len-1)
+    return deleteFromD(D,dnccpopr(P,0,len-1,Y),delete)
  
 def dnccpopr(X,s,e,Y):
     if e-s <= 3:
@@ -40,7 +43,7 @@ def dnccpopr(X,s,e,Y):
     Yr = algo1.Array((e-s+1)//2, objects.Ship(None, None, None, None, None))
     j = 0
     k = 0
-    for i in range(len(Y)):
+    for i in range(trueLen(Y)):
         if Y[i].xorder <= (s+e)//2:
             Yl[j] = Y[i]
             j += 1
@@ -63,7 +66,7 @@ def dnccpopr(X,s,e,Y):
         
     band = linkedlist.LinkedList()
 
-    for i in range(len(Y)-1, -1, -1):
+    for i in range(trueLen(Y)-1, -1, -1):
         if X[(s+e)//2].position.x-delta <= Y[i].position.x and X[(s+e)//2].position.x+delta >= Y[i].position.x:
             linkedlist.add(band, Y[i])
 
@@ -79,9 +82,9 @@ def dnccpopr(X,s,e,Y):
                 break
 
             if distance(currentNode.value, compareNode.value) < delta:
-                s1 = currentNode.value
-                s2 = compareNode.value
-                delta = distance(currentNode.value, compareNode.value)
+                s1 = copy.deepcopy(currentNode.value)
+                s2 = copy.deepcopy(compareNode.value)
+                delta = copy.deepcopy(distance(currentNode.value, compareNode.value))
 
             compareNode = compareNode.nextNode
 
@@ -89,3 +92,23 @@ def dnccpopr(X,s,e,Y):
 
     r = objects.Distance(s1, s2, delta)
     return r
+
+def deleteFromD(D,barcos,delete):
+    if delete == 2:
+        return D,barcos
+    else:
+        if delete == 0:
+            index = D.search(barcos.ship1.id)
+            D.data[index] = objects.Ship(None, None, None, None, None)
+        else:
+            index = D.search(barcos.ship2.id)
+            D.data[index] = objects.Ship(None, None, None, None, None)
+        return D,barcos
+    
+
+def trueLen(P):
+    cont=0
+    for i in range(len(P)):
+        if P[i] != None:
+            cont+=1
+    return cont

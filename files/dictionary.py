@@ -1,3 +1,4 @@
+from types import NoneType
 import algo1 as algo1
 import objects as obj
 import prime as prime
@@ -51,8 +52,9 @@ class Dictionary:
         j = 0
         for i in range(len(self.data)):
             if self.data[i] != None:
-                A[j] = obj.Ship(self.data[i].id, self.data[i].position.x, self.data[i].position.y, self.data[i].position.date, self.data[i].direction)
-                j += 1
+                if self.data[i].id != None:
+                    A[j] = obj.Ship(self.data[i].id, self.data[i].position.x, self.data[i].position.y, self.data[i].position.date, self.data[i].direction)
+                    j += 1
         return A
 
     def insert2(self, ship):
