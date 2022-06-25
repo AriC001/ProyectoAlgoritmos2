@@ -21,7 +21,7 @@ class Dictionary:
                 self.data[self.doublehash(ship.key, i)] = ship
                 inserted = True
             if inserted and i>0:
-                print(i)
+                print("",end="")
             else:
                 i+=1
             
@@ -57,6 +57,16 @@ class Dictionary:
             if self.data[i] != None:
                 A[j] = obj.Ship(self.data[i].id, self.data[i].position.x, self.data[i].position.y, self.data[i].position.date, self.data[i].direction)
                 j += 1
+        return A
+
+    def getArrayForCollision(self):
+        A = algo1.Array(self.truesize, obj.Ship(None, None, None, None, None))
+        j = 0
+        for i in range(len(self.data)):
+            if self.data[i] != None:
+                if self.data[i].id != None:
+                    A[j] = obj.Ship(self.data[i].id, self.data[i].position.x, self.data[i].position.y, self.data[i].position.date, self.data[i].direction)
+                    j += 1
         return A
 
     def insert2(self, ship):

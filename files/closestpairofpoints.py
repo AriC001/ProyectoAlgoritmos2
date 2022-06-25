@@ -92,7 +92,7 @@ def dnccpopr(X,s,e,Y):
     return r
 
 def dnccpopForCollision(D, date,delete):
-    P = D.getArray()
+    P = D.getArrayForCollision()
     len = trueLen(P)
     for i in range(len):
         if P[i] != None:
