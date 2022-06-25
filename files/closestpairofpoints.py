@@ -14,7 +14,7 @@ def bfcpop(P,s,e):
     r = linkedlist.LinkedList()
     delta = 2**64-1
     for i in range(s,e):
-        for j in range(s,e):
+        for j in range(i+1,e+1):
             if i == j:
                 continue
             if distance(P[i], P[j]) < delta:
@@ -34,21 +34,22 @@ def dnccpop(D, date):
     return D,dnccpopr(P,0,len(P)-1,Y)
  
 def dnccpopr(X,s,e,Y):
-    if e-s <= 3:
+    if e-s < 3:
+        #print("y")
         return bfcpop(X,s,e)
 
     Yl = algo1.Array((e-s)//2+1, objects.Ship(None, None, None, None, None))
     Yr = algo1.Array((e-s+1)//2, objects.Ship(None, None, None, None, None))
     j = 0
     k = 0
-    for i in range(trueLen(Y)):
+    for i in range(len(Y)):
         if Y[i].xorder <= (s+e)//2:
             Yl[j] = Y[i]
             j += 1
         else:
             Yr[k] = Y[i]
             k += 1
-
+            
     rl = dnccpopr(X,s,(s+e)//2,Yl)
 
     rr = dnccpopr(X,(s+e)//2+1,e,Yr)
@@ -61,10 +62,10 @@ def dnccpopr(X,s,e,Y):
         s1 = rr.ship1
         s2 = rr.ship2
         delta = rr.distance
-        
+    
     band = linkedlist.LinkedList()
 
-    for i in range(trueLen(Y)-1, -1, -1):
+    for i in range(len(Y)-1, -1, -1):
         if X[(s+e)//2].position.x-delta <= Y[i].position.x and X[(s+e)//2].position.x+delta >= Y[i].position.x:
             linkedlist.add(band, Y[i])
 
@@ -80,9 +81,9 @@ def dnccpopr(X,s,e,Y):
                 break
 
             if distance(currentNode.value, compareNode.value) < delta:
-                s1 = copy.deepcopy(currentNode.value)
-                s2 = copy.deepcopy(compareNode.value)
-                delta = copy.deepcopy(distance(currentNode.value, compareNode.value))
+                s1 = currentNode.value
+                s2 = compareNode.value
+                delta = distance(currentNode.value, compareNode.value)
 
             compareNode = compareNode.nextNode
 
@@ -100,10 +101,10 @@ def dnccpopForCollision(D, date,delete):
     myarray.QuickSortX(P,0,len-1)
     Y = myarray.copy(P)
     myarray.QuickSortY(Y,0,len-1)
-    return deleteFromD(D,dnccpopr(P,0,len-1,Y),delete)
+    return deleteFromD(D,dnccpoprForCollision(P,0,len-1,Y),delete)
  
 def dnccpoprForCollision(X,s,e,Y):
-    if e-s <= 3:
+    if e-s < 3:
         return bfcpop(X,s,e)
 
     Yl = algo1.Array((e-s)//2+1, objects.Ship(None, None, None, None, None))
@@ -118,9 +119,9 @@ def dnccpoprForCollision(X,s,e,Y):
             Yr[k] = Y[i]
             k += 1
 
-    rl = dnccpopr(X,s,(s+e)//2,Yl)
+    rl = dnccpoprForCollision(X,s,(s+e)//2,Yl)
 
-    rr = dnccpopr(X,(s+e)//2+1,e,Yr)
+    rr = dnccpoprForCollision(X,(s+e)//2+1,e,Yr)
 
     if rl.distance < rr.distance:
         s1 = rl.ship1
