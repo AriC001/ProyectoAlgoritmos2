@@ -74,77 +74,73 @@ def create2():
         file = open("data/ships.txt", "r")
         lines = file.readlines()
         lslen = len(lines)
-        dictionary2 = dict.Dictionary((lslen-1))
+        #dictionary2 = dict.Dictionary((lslen-1))
         dictionary2 = pickle.load(f)
     return dictionary2
 
-def search(dictionary, date, id):
+def search(date, id):
+    with open("data/trieShips", "br") as f:
+        dictionary = pickle.load(f)
 
-    index = dictionary.search(id)
+        index = dictionary.search(id)
 
-    if not index:
-        return None
+        if not index:
+            return None
 
-    s = obj.Ship(dictionary.data[index].id, dictionary.data[index].position.x, dictionary.data[index].position.y, dictionary.data[index].position.date, dictionary.data[index].direction)
+        s = obj.Ship(dictionary.data[index].id, dictionary.data[index].position.x, dictionary.data[index].position.y, dictionary.data[index].position.date, dictionary.data[index].direction)
 
-    s.movement(date)
+        s.movement(date)
 
     return s.position
 
-def closer(D, date):
-    r = algo1.Array(2, algo1.String(""))
-    X = D.getArray()
-    for i in range(len(X)):
-        X[i].movement(date)
-    myarray.QuickSortX(X,0,len(X)-1)
-    Y = myarray.copy(X)
-    myarray.QuickSortY(Y,0,len(Y)-1)
-    cp = cpop.dnccpop(X,0,len(X)-1,Y)
-    r[0] = cp.ship1.id
-    r[1] = cp.ship2.id
-    return r
-
-def collision(D):
-    
-    C = linkedlist.LinkedList()
-    date = "00/05/2022"
-    for i in range(31):
-        Dictionary = copy.deepcopy(D)
-        X = Dictionary.getArray()
-        date = nextDay(date)
+def closer(date):
+    with open("data/trieShips", "br") as f:
+        D = pickle.load(f)
+        r = algo1.Array(2, algo1.String(""))
+        X = D.getArray()
         for i in range(len(X)):
             X[i].movement(date)
         myarray.QuickSortX(X,0,len(X)-1)
         Y = myarray.copy(X)
         myarray.QuickSortY(Y,0,len(Y)-1)
         cp = cpop.dnccpop(X,0,len(X)-1,Y)
-        
-        while cp.distance <= 1:
-            X = Dictionary.getArray()
-            for i in range(len(X)):
-                X[i].movement(date)
-            myarray.QuickSortX(X,0,len(X)-1)
-            Y = myarray.copy(X)
-            myarray.QuickSortY(Y,0,len(Y)-1)
-            cp = cpop.dnccpop(X,0,len(X)-1,Y)
+        r[0] = cp.ship1.id
+        r[1] = cp.ship2.id
+    return r
 
-            if cp.distance > 1:
-                break
+def collision():
+    with open("data/trieShips", "br") as f:
+        D = pickle.load(f)
+        C = linkedlist.LinkedList()
+        date = "00/05/2022"
+        for i in range(31):
+            date = nextDay(date)
+            Dc = copy.deepcopy(D)
+            while True:
+                X = Dc.getArray()
+                for i in range(len(X)):
+                    X[i].movement(date)
+                myarray.QuickSortX(X,0,len(X)-1)
+                Y = myarray.copy(X)
+                myarray.QuickSortY(Y,0,len(Y)-1)
+                cp = cpop.dnccpop(X,0,len(X)-1,Y)
 
-            linkedlist.add(C, obj.CollisionRisk(cp.ship1, cp.ship2, date))
-            for i in range(len(X)):
-                if i==cp.ship1.xorder or i==cp.ship2.xorder:
-                    continue
-                if cpop.distance(cp.ship1, X[i]) <= 1:
-                    linkedlist.add(C, obj.CollisionRisk(cp.ship1, X[i], date))
-                if cpop.distance(cp.ship2, X[i]) <= 1:
-                    linkedlist.add(C, obj.CollisionRisk(cp.ship2, X[i], date))
-            
-            Dictionary.delete(cp.ship1.id)
-            Dictionary.delete(cp.ship2.id)
+                if cp.distance > 1:
+                    break
 
-    print(C)
-    print(linkedlist.length(C))
+                linkedlist.add(C, obj.CollisionRisk(cp.ship1, cp.ship2, date))
+
+                for i in range(len(X)):
+                    if i==cp.ship1.xorder or i==cp.ship2.xorder:
+                        continue
+                    if cpop.distance(cp.ship1, X[i]) <= 1:
+                        linkedlist.add(C, obj.CollisionRisk(cp.ship1, X[i], date))
+                    if cpop.distance(cp.ship2, X[i]) <= 1:
+                        linkedlist.add(C, obj.CollisionRisk(cp.ship2, X[i], date))
+                
+                Dc.delete(cp.ship1.id)
+                Dc.delete(cp.ship2.id)
+
     return C
 
         
