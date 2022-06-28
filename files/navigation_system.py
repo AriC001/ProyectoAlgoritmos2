@@ -1,10 +1,10 @@
 import objects as obj
 import dictionary as dict
 import algo1 as algo1
-import linkedlist as linkedlist
 import closestpairofpoints as cpop
 import pickle
-import copy
+import myarray as myarray
+import linkedlist as linkedlist
 
 def create():
     with open("data/ships.txt", "r") as file:
@@ -83,49 +83,58 @@ def search(dictionary, date, id):
     if not index:
         return None
 
-    s = obj.Ship(dictionary.data[index].id, dictionary.data[index].position.x, dictionary.data[index].position.y, dictionary.data[index].position.date, dictionary.data[index].direction)
+    s = obj.Ship(dictionary.data[index].value.id, dictionary.data[index].value.position.x, dictionary.data[index].value.position.y, dictionary.data[index].value.position.date, dictionary.data[index].value.direction)
 
     s.movement(date)
 
     return s.position
 
-
 def closer(D, date):
     r = algo1.Array(2, algo1.String(""))
-    cp = cpop.dnccpop(D, date)
-    r[0] = cp[1].ship1.id
-    r[1] = cp[1].ship2.id
+    X = D.getArray()
+    for i in range(len(X)):
+        X[i].movement(date)
+    myarray.QuickSortX(X,0,len(X)-1)
+    Y = myarray.copy(X)
+    myarray.QuickSortY(Y,0,len(Y)-1)
+    cp = cpop.dnccpop(X,0,len(X)-1,Y)
+    r[0] = cp.ship1.id
+    r[1] = cp.ship2.id
     return r
 
-def collision(Dictionary):
-    mounth = algo1.Array(31,obj.Distance(None,None,None))
-    for days in range(30):
-        D = copy.deepcopy(Dictionary) #Como se eliminan barcos de D, hay que resetearlo para cada dia
-        if days < 9:
-            date = "0" + str(days+1)
-        else:
-            date = str(days+1)
-        r = cpop.dnccpopForCollision(D, date,0)
-        mounth[days] = r[1]
-        if mounth[days].distance <= 1:
-            print("Day",days+1,": ",mounth[days].ship1.id,mounth[days].ship2.id,mounth[days].distance)
-        second = linkedlist.LinkedList()#obj.Distance(None,None,None))
-        while mounth[days].distance <= 1:
-            #deberia eliminar uno y despues el otro simplemente pasando un numero, ver si es par eliminar uno si es impar eliminar el otro
-            r = cpop.dnccpopForCollision(D, date,0)
-            '''
-            D = copy.deepcopy(Dictionary)
-            aux = cpop.deleteFromD(D,mounth[days],0)
-            D = copy.deepcopy(aux[0])
-            '''
-            if r[1].distance <= 1:
-                linkedlist.addInverted(second,r[1])
-                print("Day",days+1,": ",r[1].ship1.id,r[1].ship2.id,r[1].distance)
-            mounth[days] = r[1]
-        D = copy.deepcopy(Dictionary)
-        for j in range(linkedlist.length(second)):
-            aux = aux = cpop.deleteFromD(D,second[j].value,1)
-            D = copy.deepcopy(aux[0])
-            r = cpop.dnccpopForCollision(D, date,0)
-            if r[1].distance <= 1:
-                print("Day",days+1,": ",r[1].ship1.id,r[1].ship2.id,r[1].distance)
+def collision(D):
+    C = linkedlist.LinkedList()
+    date = "00/05/2022"
+    for i in range(31):
+        X = D.getArray()
+        date = nextDay(date)
+        for i in range(len(X)):
+            X[i].movement(date)
+        myarray.QuickSortX(X,0,len(X)-1)
+        Y = myarray.copy(X)
+        myarray.QuickSortY(Y,0,len(Y)-1)
+        cp = cpop.dnccpop(X,0,len(X)-1,Y)
+        if cp.distance > 1:
+            continue
+        linkedlist.add(C, obj.CollisionRisk(cp.ship1, cp.ship2, date))
+        for i in range(len(X)):
+            if i==cp.ship1.xorder or i==cp.ship2.xorder:
+                continue
+            if cpop.distance(cp.ship1, X[i]) <= 1:
+                linkedlist.add(C, obj.CollisionRisk(cp.ship1, X[i], date))
+            if cpop.distance(cp.ship2, X[i]) <= 1:
+                linkedlist.add(C, obj.CollisionRisk(cp.ship2, X[i], date))
+        D.delete(cp.ship1.id)
+        D.delete(cp.ship1.id)
+    return C
+
+        
+        
+def nextDay(date):
+    my = algo1.substr(date,2,len(date))
+    d = (ord(date[0])-48)*10+(ord(date[1])-48)+1
+    if d<10:
+        d = algo1.concat(algo1.String("0"),algo1.String(chr(d+48)))
+    else:
+        d = algo1.concat(algo1.String(chr(d//10+48)), algo1.String(chr(d%10+48)))
+    return algo1.concat(d,my)

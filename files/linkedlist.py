@@ -10,6 +10,7 @@ class LinkedList:
             currentNode = currentNode.nextNode
             if currentNode != None:
                 string += ", "
+                string += "\n"
         string += "]"
         return string
 
