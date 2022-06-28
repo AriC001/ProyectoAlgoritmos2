@@ -54,7 +54,7 @@ class Dictionary:
         for i in range(len(self.data)):
             if self.data[i] != None:
                 if self.data[i].key > -1:
-                    A[j] = obj.Ship(self.data[i].value.id, self.data[i].value.position.x, self.data[i].value.position.y, self.data[i].value.position.date, self.data[i].value.direction)
+                    A[j] = obj.Ship(self.data[i].id, self.data[i].position.x, self.data[i].position.y, self.data[i].position.date, self.data[i].direction)
                     j += 1
         return A
 

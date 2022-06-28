@@ -27,15 +27,15 @@ class Ship:
         self.position.date = date
 
         if algo1.strcmp(self.direction, algo1.String("NW")):
-            self.position.x -= days/2**(1/2)
-            self.position.y += days/2**(1/2)
+            self.position.x -= days
+            self.position.y += days
         
         elif algo1.strcmp(self.direction, algo1.String("N")):
             self.position.y += days
 
         elif algo1.strcmp(self.direction, algo1.String("NE")):
-            self.position.x += days/2**(1/2)
-            self.position.y += days/2**(1/2)
+            self.position.x += days
+            self.position.y += days
 
         elif algo1.strcmp(self.direction, algo1.String("W")):
             self.position.x -= days
@@ -44,15 +44,15 @@ class Ship:
             self.position.x += days
 
         elif algo1.strcmp(self.direction, algo1.String("SW")):
-            self.position.x -= days/2**(1/2)
-            self.position.y -= days/2**(1/2)
+            self.position.x -= days
+            self.position.y -= days
 
         elif algo1.strcmp(self.direction, algo1.String("S")):
             self.position.y -= days
 
         elif algo1.strcmp(self.direction, algo1.String("SE")):
-            self.position.x += days/2**(1/2)
-            self.position.y -= days/2**(1/2)
+            self.position.x += days
+            self.position.y -= days
 
 def getDays(date):
     d = 0

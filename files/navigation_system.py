@@ -5,6 +5,8 @@ import closestpairofpoints as cpop
 import pickle
 import myarray as myarray
 import linkedlist as linkedlist
+import copy
+
 
 def create():
     with open("data/ships.txt", "r") as file:
@@ -83,7 +85,7 @@ def search(dictionary, date, id):
     if not index:
         return None
 
-    s = obj.Ship(dictionary.data[index].value.id, dictionary.data[index].value.position.x, dictionary.data[index].value.position.y, dictionary.data[index].value.position.date, dictionary.data[index].value.direction)
+    s = obj.Ship(dictionary.data[index].id, dictionary.data[index].position.x, dictionary.data[index].position.y, dictionary.data[index].position.date, dictionary.data[index].direction)
 
     s.movement(date)
 
@@ -103,10 +105,12 @@ def closer(D, date):
     return r
 
 def collision(D):
+    
     C = linkedlist.LinkedList()
     date = "00/05/2022"
     for i in range(31):
-        X = D.getArray()
+        Dictionary = copy.deepcopy(D)
+        X = Dictionary.getArray()
         date = nextDay(date)
         for i in range(len(X)):
             X[i].movement(date)
@@ -114,18 +118,33 @@ def collision(D):
         Y = myarray.copy(X)
         myarray.QuickSortY(Y,0,len(Y)-1)
         cp = cpop.dnccpop(X,0,len(X)-1,Y)
-        if cp.distance > 1:
-            continue
-        linkedlist.add(C, obj.CollisionRisk(cp.ship1, cp.ship2, date))
-        for i in range(len(X)):
-            if i==cp.ship1.xorder or i==cp.ship2.xorder:
-                continue
-            if cpop.distance(cp.ship1, X[i]) <= 1:
-                linkedlist.add(C, obj.CollisionRisk(cp.ship1, X[i], date))
-            if cpop.distance(cp.ship2, X[i]) <= 1:
-                linkedlist.add(C, obj.CollisionRisk(cp.ship2, X[i], date))
-        D.delete(cp.ship1.id)
-        D.delete(cp.ship1.id)
+        
+        while cp.distance <= 1:
+            X = Dictionary.getArray()
+            for i in range(len(X)):
+                X[i].movement(date)
+            myarray.QuickSortX(X,0,len(X)-1)
+            Y = myarray.copy(X)
+            myarray.QuickSortY(Y,0,len(Y)-1)
+            cp = cpop.dnccpop(X,0,len(X)-1,Y)
+
+            if cp.distance > 1:
+                break
+
+            linkedlist.add(C, obj.CollisionRisk(cp.ship1, cp.ship2, date))
+            for i in range(len(X)):
+                if i==cp.ship1.xorder or i==cp.ship2.xorder:
+                    continue
+                if cpop.distance(cp.ship1, X[i]) <= 1:
+                    linkedlist.add(C, obj.CollisionRisk(cp.ship1, X[i], date))
+                if cpop.distance(cp.ship2, X[i]) <= 1:
+                    linkedlist.add(C, obj.CollisionRisk(cp.ship2, X[i], date))
+            
+            Dictionary.delete(cp.ship1.id)
+            Dictionary.delete(cp.ship2.id)
+
+    print(C)
+    print(linkedlist.length(C))
     return C
 
         

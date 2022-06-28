@@ -1,3 +1,3 @@
 import shipstxt as shipstxt
 
-shipstxt.filltxt("barco", 10000)
+shipstxt.filltxt("barco", 1000)
