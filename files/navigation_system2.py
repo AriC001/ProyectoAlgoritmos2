@@ -96,17 +96,32 @@ def search(date, id):
 def closer(date):
     with open("../data/trieShips", "br") as f:
         D = pickle.load(f)
-        r = algo1.Array(2, algo1.String(""))
-        X = D.getArray()
-        for i in range(len(X)):
-            X[i].movement(date)
-        myarray.QuickSortX(X,0,len(X)-1)
-        Y = myarray.copy(X)
-        myarray.QuickSortY(Y,0,len(Y)-1)
-        cp = cpop.dnccpop(X,0,len(X)-1,Y)
-        r[0] = cp.ship1.id
-        r[1] = cp.ship2.id
-        return r
+        C = linkedlist.LinkedList()
+        Dc = copy.deepcopy(D)
+        while True:
+            X = Dc.getArray()
+            for i in range(len(X)):
+                X[i].movement(date)
+            myarray.QuickSortX(X,0,len(X)-1)
+            Y = myarray.copy(X)
+            myarray.QuickSortY(Y,0,len(Y)-1)
+            cp = cpop.dnccpop(X,0,len(X)-1,Y)
+            if cp.distance > d:
+                break
+            d = cp.distance
+            linkedlist.add(C, obj.CollisionRisk(cp.ship1, cp.ship2, date))
+            for i in range(len(X)):
+                if i==cp.ship1.xorder or i==cp.ship2.xorder:
+                    continue
+                if cpop.distance(cp.ship1, X[i]) == cp.distance:
+                    linkedlist.add(C, obj.CollisionRisk(cp.ship1, X[i], date))
+                if cpop.distance(cp.ship2, X[i]) == cp.distance:
+                        linkedlist.add(C, obj.CollisionRisk(cp.ship2, X[i], date))
+                
+            Dc.delete(cp.ship1.id)
+            Dc.delete(cp.ship2.id)
+    if C.head != None:
+        return C
 
 def collision():
     with open("../data/trieShips", "br") as f:
