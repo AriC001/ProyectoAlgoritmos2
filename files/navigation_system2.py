@@ -9,7 +9,7 @@ import copy
 
 
 def create():
-    with open("data/flota_ejemplo.txt", "r") as file:
+    with open("../data/ships.txt", "r") as file:
         lines = file.readlines()
         ships = getShipCount(lines)
         dictionary = dict.Dictionary((ships))
@@ -38,9 +38,9 @@ def create():
                     direction = algo1.substr(lines[i], start, j)
 
             dictionary.insert(obj.Ship(id, toFloat(x), toFloat(y), date, direction))
-        with open("data/trieShips", "bw") as f:
+        with open("../data/DictionaryShips", "bw") as f:
             pickle.dump(dictionary,f)
-    return dictionary
+    return True
 
 def getShipCount(lines):
     c = 0
@@ -48,7 +48,6 @@ def getShipCount(lines):
         if len(lines[i]) > 1:
             c += 1
     return c
-
 
 def toFloat(s):
     ip = 0
@@ -70,16 +69,17 @@ def toFloat(s):
     return m*(ip+dp)
 
 def create2():
-    with open("data/trieShips", "br") as f:
-        file = open("data/trieShips", "r")
-        lines = file.readlines()
-        lslen = len(lines)
+    #with open("../data/DictionaryShips", "br") as f:
+        #file = open("data/DictionaryShips", "r")
+        #lines = file.readlines()
+        #lslen = len(lines)
         #dictionary2 = dict.Dictionary((lslen-1))
-        dictionary2 = pickle.load(f)
-    return dictionary2
+        #dictionary2 = pickle.load(f)
+    #return dictionary2
+    return
 
 def search(date, id):
-    with open("data/trieShips", "br") as f:
+    with open("../data/DictionaryShips", "br") as f:
         dictionary = pickle.load(f)
 
         index = dictionary.search(id)
@@ -94,10 +94,11 @@ def search(date, id):
     return s.position
 
 def closer(date):
-    with open("data/trieShips", "br") as f:
+    with open("../data/DictionaryShips", "br") as f:
         D = pickle.load(f)
         C = linkedlist.LinkedList()
         Dc = copy.deepcopy(D)
+        d = 2**63
         while True:
             X = Dc.getArray()
             for i in range(len(X)):
@@ -124,7 +125,7 @@ def closer(date):
         return C
 
 def collision():
-    with open("data/trieShips", "br") as f:
+    with open("../data/DictionaryShips", "br") as f:
         D = pickle.load(f)
         C = linkedlist.LinkedList()
         date = "00/05/2022"
@@ -156,6 +157,14 @@ def collision():
                 Dc.delete(cp.ship1.id)
                 Dc.delete(cp.ship2.id)
     if C.head != None:
+        with open("collsion.txt", "w") as file:
+            file.write("")
+        with open("collsion.txt", "w+") as f:
+            nodo = linkedlist.Node()
+            nodo = C.head
+            while nodo != None:
+                f.write(str(nodo.value.ship1.id) + " " + str(nodo.value.ship1.position.x) + " " + str(nodo.value.ship1.position.y) + " / " + str(nodo.value.ship2.id) + " " + str(nodo.value.ship2.position.x) + " " + str(nodo.value.ship2.position.y) + " - " + str(nodo.value.day) + "\n" )
+                nodo = nodo.nextNode
         return C
     else:
         return False

@@ -9,7 +9,8 @@ if len(sys.argv) > 1:
   elif sys.argv[1] == "-search":
     print(nv.search(sys.argv[2],sys.argv[3]))
   elif sys.argv[1] == "-closer":
-    print(nv.closer(sys.argv[2]))
+    C = nv.closer(sys.argv[2])
+    print(C)
   elif sys.argv[1] == "-collision":
     C = nv.collision()
     print(C)

@@ -75,6 +75,9 @@ class Distance:
         self.ship2 = s2
         self.distance = d
 
+    def __str__(self):
+        return "{ "+self.ship1.__str__()+", "+self.ship2.__str__()+", "+str(self.distance)+"}"
+
 class CollisionRisk:
 
     def __init__(self, s1, s2, day):
