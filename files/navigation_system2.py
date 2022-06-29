@@ -9,7 +9,7 @@ import copy
 
 
 def create():
-    with open("../data/flota_ejemplo.txt", "r") as file:
+    with open("data/flota_ejemplo.txt", "r") as file:
         lines = file.readlines()
         ships = getShipCount(lines)
         dictionary = dict.Dictionary((ships))
@@ -38,7 +38,7 @@ def create():
                     direction = algo1.substr(lines[i], start, j)
 
             dictionary.insert(obj.Ship(id, toFloat(x), toFloat(y), date, direction))
-        with open("../data/trieShips", "bw") as f:
+        with open("data/trieShips", "bw") as f:
             pickle.dump(dictionary,f)
     return dictionary
 
@@ -70,8 +70,8 @@ def toFloat(s):
     return m*(ip+dp)
 
 def create2():
-    with open("../data/trieShips", "br") as f:
-        file = open("../data/ships.txt", "r")
+    with open("data/trieShips", "br") as f:
+        file = open("data/trieShips", "r")
         lines = file.readlines()
         lslen = len(lines)
         #dictionary2 = dict.Dictionary((lslen-1))
@@ -79,7 +79,7 @@ def create2():
     return dictionary2
 
 def search(date, id):
-    with open("../data/trieShips", "br") as f:
+    with open("data/trieShips", "br") as f:
         dictionary = pickle.load(f)
 
         index = dictionary.search(id)
@@ -94,7 +94,7 @@ def search(date, id):
     return s.position
 
 def closer(date):
-    with open("../data/trieShips", "br") as f:
+    with open("data/trieShips", "br") as f:
         D = pickle.load(f)
         C = linkedlist.LinkedList()
         Dc = copy.deepcopy(D)
@@ -109,14 +109,14 @@ def closer(date):
             if cp.distance > d:
                 break
             d = cp.distance
-            linkedlist.add(C, obj.CollisionRisk(cp.ship1, cp.ship2, date))
+            linkedlist.add(C, obj.Distance(cp.ship1, cp.ship2, d))
             for i in range(len(X)):
                 if i==cp.ship1.xorder or i==cp.ship2.xorder:
                     continue
                 if cpop.distance(cp.ship1, X[i]) == cp.distance:
-                    linkedlist.add(C, obj.CollisionRisk(cp.ship1, X[i], date))
+                    linkedlist.add(C, obj.Distance(cp.ship1, X[i], d))
                 if cpop.distance(cp.ship2, X[i]) == cp.distance:
-                        linkedlist.add(C, obj.CollisionRisk(cp.ship2, X[i], date))
+                        linkedlist.add(C, obj.Distance(cp.ship2, X[i], d))
                 
             Dc.delete(cp.ship1.id)
             Dc.delete(cp.ship2.id)
@@ -124,7 +124,7 @@ def closer(date):
         return C
 
 def collision():
-    with open("../data/trieShips", "br") as f:
+    with open("data/trieShips", "br") as f:
         D = pickle.load(f)
         C = linkedlist.LinkedList()
         date = "00/05/2022"
