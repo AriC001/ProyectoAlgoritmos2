@@ -92,3 +92,17 @@ def strcmp(t,p):
 
 def concat(s,c):
        return String(s.arr.data+c.arr.data)
+
+def strToInt(s):
+        n = 0
+        m = 1
+        for i in range(len(s)):
+                if i == 0:
+                        if strcmp(s[i],String("-")):
+                                m = -1
+                        else:
+                                n += int(s[i])
+                else:
+                        n *= 10
+                        n += int(s[i])
+        return n*m

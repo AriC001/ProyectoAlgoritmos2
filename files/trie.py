@@ -1,5 +1,4 @@
-import algo1 as algo1
-import objects as objects
+from algo1 import *
 
 class TrieNode:
 
@@ -9,29 +8,44 @@ class TrieNode:
 class Trie:
 
     def __init__(self):
-        self.data = algo1.Array(63, TrieNode())
+        self.root = TrieNode()
+        self.root.children = Array(63, TrieNode())
 
     def insert(self, ship):
+        
+        pCrawl = self.root.children
 
         for i in range(len(ship.id)):
 
             index = getInt(ship.id[i])
-            if self.data[index] == None:
-                self.data[index] = TrieNode()
+            if pCrawl[index] == None:
+                pCrawl[index] = TrieNode()
             
             if i == len(ship.id)-1:
-                self.data[index].ship = ship
+                pCrawl[index].ship = ship
+                return index
+            elif pCrawl[index].children == None:
+                pCrawl[index].children = Array(63, TrieNode())
+
+            pCrawl = pCrawl[index].children
 
     def search(self, id):
 
+        pCrawl = self.root.children
+
         for i in range(len(id)):
 
+            if pCrawl == None:
+                return
+
             index = getInt(id[i])
-            if self.data[index] == None:
-                return None
+            if pCrawl[index] == None:
+                return
             
-            if i == len(id)-1 and self.data[index].ship != None:
-                return self.data[index].ship
+            if i == len(id)-1:
+                return pCrawl[index].ship
+
+            pCrawl = pCrawl[index].children
 
 def getInt(character):
     unicode = ord(character)

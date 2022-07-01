@@ -1,11 +1,11 @@
-import algo1 as algo1
+from algo1 import *
+from main import *
 
 class Position:
 
-    def __init__(self, x, y, date):
+    def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.date = date
         
     def __str__(self):
         return "("+str(self.x)+", "+str(self.y)+")"
@@ -13,44 +13,44 @@ class Position:
         
 class Ship:
 
-    def __init__(self, id, x, y, date, direction):
+    def __init__(self, id, x, y, direction):
         self.id = id
-        self.position = Position(x, y, date)
+        self.position = Position(x, y)
         self.direction = direction
-        self.xorder = None
+        self.xorder = 0
+        self.yorder = 0
 
     def __str__(self):
         return "{"+str(self.id)+", "+self.position.__str__()+", "+str(self.direction)+"}"
 
-    def movement(self, date):
-        days = getDays(date)-getDays(self.position.date)
-        self.position.date = date
+    def movement(self, date, firstDay):
+        days = getDays(date) - getDays(firstDay)
 
-        if algo1.strcmp(self.direction, algo1.String("NW")):
+        if strcmp(self.direction, String("NW")):
             self.position.x -= days
             self.position.y += days
         
-        elif algo1.strcmp(self.direction, algo1.String("N")):
+        elif strcmp(self.direction, String("N")):
             self.position.y += days
 
-        elif algo1.strcmp(self.direction, algo1.String("NE")):
+        elif strcmp(self.direction, String("NE")):
             self.position.x += days
             self.position.y += days
 
-        elif algo1.strcmp(self.direction, algo1.String("W")):
+        elif strcmp(self.direction, String("W")):
             self.position.x -= days
 
-        elif algo1.strcmp(self.direction, algo1.String("E")):
+        elif strcmp(self.direction, String("E")):
             self.position.x += days
 
-        elif algo1.strcmp(self.direction, algo1.String("SW")):
+        elif strcmp(self.direction, String("SW")):
             self.position.x -= days
             self.position.y -= days
 
-        elif algo1.strcmp(self.direction, algo1.String("S")):
+        elif strcmp(self.direction, String("S")):
             self.position.y -= days
 
-        elif algo1.strcmp(self.direction, algo1.String("SE")):
+        elif strcmp(self.direction, String("SE")):
             self.position.x += days
             self.position.y -= days
 
@@ -60,13 +60,6 @@ def getDays(date):
         d *= 10
         d += ord(date[i])-48
     return d
-
-def strToInt(s):
-    n = 0
-    for i in range(len(s)):
-        n *= 10
-        n += int(s[i])
-    return n
 
 class Distance:
 
@@ -81,8 +74,8 @@ class Distance:
 class CollisionRisk:
 
     def __init__(self, s1, s2, day):
-        self.ship1 = Ship(s1.id, s1.position.x, s1.position.y, s1.position.date, s1.direction)
-        self.ship2 = Ship(s2.id, s2.position.x, s2.position.y, s2.position.date, s2.direction)
+        self.ship1 = Ship(s1.id, s1.position.x, s1.position.y, s1.direction)
+        self.ship2 = Ship(s2.id, s2.position.x, s2.position.y, s2.direction)
         self.day = day
 
     def __str__(self):
