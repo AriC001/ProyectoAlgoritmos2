@@ -1,4 +1,4 @@
-# Proyecto Algoritmos y Estructura de datos 2
+# Proyecto Algoritmos y Estructuras de Datos 2
 
 
 ## **Seguimiento de navegación.**
