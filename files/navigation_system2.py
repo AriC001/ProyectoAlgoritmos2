@@ -37,10 +37,12 @@ def create():
                 elif j == llen-1:
                     direction = algo1.substr(lines[i], start, j)
 
-            dictionary.insert(obj.Ship(id, toFloat(x), toFloat(y), date, direction))
+            dictionary.insert(
+                obj.Ship(id, toFloat(x), toFloat(y), date, direction))
         with open("../data/DictionaryShips", "bw") as f:
-            pickle.dump(dictionary,f)
+            pickle.dump(dictionary, f)
     return True
+
 
 def getShipCount(lines):
     c = 0
@@ -48,6 +50,7 @@ def getShipCount(lines):
         if len(lines[i]) > 1:
             c += 1
     return c
+
 
 def toFloat(s):
     ip = 0
@@ -68,15 +71,17 @@ def toFloat(s):
     dp /= 10**(len(s)-pi-1)
     return m*(ip+dp)
 
+
 def create2():
-    #with open("../data/DictionaryShips", "br") as f:
-        #file = open("data/DictionaryShips", "r")
-        #lines = file.readlines()
-        #lslen = len(lines)
-        #dictionary2 = dict.Dictionary((lslen-1))
-        #dictionary2 = pickle.load(f)
-    #return dictionary2
+    # with open("../data/DictionaryShips", "br") as f:
+    # file = open("data/DictionaryShips", "r")
+    # lines = file.readlines()
+    # lslen = len(lines)
+    # dictionary2 = dict.Dictionary((lslen-1))
+    # dictionary2 = pickle.load(f)
+    # return dictionary2
     return
+
 
 def search(date, id):
     with open("../data/DictionaryShips", "br") as f:
@@ -87,11 +92,13 @@ def search(date, id):
         if not index:
             return None
 
-        s = obj.Ship(dictionary.data[index].value.id, dictionary.data[index].value.position.x, dictionary.data[index].value.position.y, dictionary.data[index].value.position.date, dictionary.data[index].value.direction)
+        s = obj.Ship(dictionary.data[index].value.id, dictionary.data[index].value.position.x, dictionary.data[index].value.position.y,
+                     dictionary.data[index].value.position.date, dictionary.data[index].value.direction)
 
         s.movement(date)
 
     return s.position
+
 
 def closer(date):
     with open("../data/DictionaryShips", "br") as f:
@@ -103,26 +110,27 @@ def closer(date):
             X = Dc.getArray()
             for i in range(len(X)):
                 X[i].movement(date)
-            myarray.QuickSortX(X,0,len(X)-1)
+            myarray.QuickSortX(X, 0, len(X)-1)
             Y = myarray.copy(X)
-            myarray.QuickSortY(Y,0,len(Y)-1)
-            cp = cpop.dnccpop(X,0,len(X)-1,Y)
+            myarray.QuickSortY(Y, 0, len(Y)-1)
+            cp = cpop.dnccpop(X, 0, len(X)-1, Y)
             if cp.distance > d:
                 break
             d = cp.distance
             linkedlist.add(C, obj.Distance(cp.ship1, cp.ship2, d))
             for i in range(len(X)):
-                if i==cp.ship1.xorder or i==cp.ship2.xorder:
+                if i == cp.ship1.xorder or i == cp.ship2.xorder:
                     continue
                 if cpop.distance(cp.ship1, X[i]) == cp.distance:
                     linkedlist.add(C, obj.Distance(cp.ship1, X[i], d))
                 if cpop.distance(cp.ship2, X[i]) == cp.distance:
-                        linkedlist.add(C, obj.Distance(cp.ship2, X[i], d))
-                
+                    linkedlist.add(C, obj.Distance(cp.ship2, X[i], d))
+
             Dc.delete(cp.ship1.id)
             Dc.delete(cp.ship2.id)
     if C.head != None:
         return C
+
 
 def collision():
     with open("../data/DictionaryShips", "br") as f:
@@ -136,10 +144,10 @@ def collision():
                 X = Dc.getArray()
                 for i in range(len(X)):
                     X[i].movement(date)
-                myarray.QuickSortX(X,0,len(X)-1)
+                myarray.QuickSortX(X, 0, len(X)-1)
                 Y = myarray.copy(X)
-                myarray.QuickSortY(Y,0,len(Y)-1)
-                cp = cpop.dnccpop(X,0,len(X)-1,Y)
+                myarray.QuickSortY(Y, 0, len(Y)-1)
+                cp = cpop.dnccpop(X, 0, len(X)-1, Y)
 
                 if cp.distance > 1:
                     break
@@ -147,13 +155,15 @@ def collision():
                 linkedlist.add(C, obj.CollisionRisk(cp.ship1, cp.ship2, date))
 
                 for i in range(len(X)):
-                    if i==cp.ship1.xorder or i==cp.ship2.xorder:
+                    if i == cp.ship1.xorder or i == cp.ship2.xorder:
                         continue
                     if cpop.distance(cp.ship1, X[i]) <= 1:
-                        linkedlist.add(C, obj.CollisionRisk(cp.ship1, X[i], date))
+                        linkedlist.add(C, obj.CollisionRisk(
+                            cp.ship1, X[i], date))
                     if cpop.distance(cp.ship2, X[i]) <= 1:
-                        linkedlist.add(C, obj.CollisionRisk(cp.ship2, X[i], date))
-                
+                        linkedlist.add(C, obj.CollisionRisk(
+                            cp.ship2, X[i], date))
+
                 Dc.delete(cp.ship1.id)
                 Dc.delete(cp.ship2.id)
     if C.head != None:
@@ -163,19 +173,20 @@ def collision():
             nodo = linkedlist.Node()
             nodo = C.head
             while nodo != None:
-                f.write(str(nodo.value.ship1.id) + " " + str(nodo.value.ship1.position.x) + " " + str(nodo.value.ship1.position.y) + " / " + str(nodo.value.ship2.id) + " " + str(nodo.value.ship2.position.x) + " " + str(nodo.value.ship2.position.y) + " - " + str(nodo.value.day) + "\n" )
+                f.write(str(nodo.value.ship1.id) + " " + str(nodo.value.ship1.position.x) + " " + str(nodo.value.ship1.position.y) + " / " + str(
+                    nodo.value.ship2.id) + " " + str(nodo.value.ship2.position.x) + " " + str(nodo.value.ship2.position.y) + " - " + str(nodo.value.day) + "\n")
                 nodo = nodo.nextNode
         return C
     else:
         return False
 
-        
-        
+
 def nextDay(date):
-    my = algo1.substr(date,2,len(date))
+    my = algo1.substr(date, 2, len(date))
     d = (ord(date[0])-48)*10+(ord(date[1])-48)+1
-    if d<10:
-        d = algo1.concat(algo1.String("0"),algo1.String(chr(d+48)))
+    if d < 10:
+        d = algo1.concat(algo1.String("0"), algo1.String(chr(d+48)))
     else:
-        d = algo1.concat(algo1.String(chr(d//10+48)), algo1.String(chr(d%10+48)))
-    return algo1.concat(d,my)
+        d = algo1.concat(algo1.String(chr(d//10+48)),
+                         algo1.String(chr(d % 10+48)))
+    return algo1.concat(d, my)

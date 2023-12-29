@@ -46,6 +46,7 @@ def length(L):
 
     return elements
 
+
 def access(L, position):
 
     if L == None:
@@ -67,8 +68,9 @@ def access(L, position):
 
     return currentNode.value
 
-def addInverted(L,element):
-    
+
+def addInverted(L, element):
+
     if L == None:
         newNode = Node()
         newNode.value = element
@@ -79,5 +81,5 @@ def addInverted(L,element):
         current = L.head
         newNode.value = element
         while current != None:
-            current=current.nextNode
+            current = current.nextNode
         current = newNode

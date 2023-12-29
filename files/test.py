@@ -13,8 +13,8 @@ D = ns.create2()
 
 
 '''-search <date> <nombre_embarcacion>'''
-#print(ns.search(D, "01/05/2022", "b85"))
-#print(ns.search(D, "01/05/2022", "b36"))
+# print(ns.search(D, "01/05/2022", "b85"))
+# print(ns.search(D, "01/05/2022", "b36"))
 
 
 '''navigation_system.py -closer <date>'''
@@ -23,6 +23,4 @@ print(C)
 
 
 '''navigation_system.py -closer <date>'''
-#ns.collision()
-
-
+# ns.collision()
